@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estilo Urbano - Tienda de Ropa</title>
+  <style>
+    /* General */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+      transition: background-color 0.3s;
+      padding: 0;
+    }
+
+    header {
+      background-color: #111;
+      color: #fff;
+      padding: 1em;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5em 2em;
+      align-items: center;
+      position: relative;
+    }
+
+    nav a {
+      color: #fff;
+      padding: 1em;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #555;
+    }
+
+    /* Modo oscuro */
+    body.modo-oscuro {
+      background-color: #1c1c1c;
+      color: #ddd;
+    }
+
+    .modo-oscuro header, .modo-oscuro footer {
+      background-color: #222;
+    }
+
+    .modo-oscuro nav {
+      background-color: #444;
+    }
+
+    /* Slider */
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      margin-bottom: 2em;
+    }
+
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s ease;
+    }
+
+    /* Carrito */
+    .carrito-dropdown {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .carrito-icono {
+      color: #fff;
+      font-size: 1.4em;
+      transition: color 0.3s;
+    }
+
+    .carrito-dropdown:hover .carrito-icono {
+      color: #ffd700;
+    }
+
+    .carrito-contenido {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #fff;
+      min-width: 280px;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 6px;
+      padding: 1em;
+      margin-top: 10px;
+    }
+
+    .carrito-dropdown:hover .carrito-contenido {
+      display: block;
+    }
+
+    .carrito-contenido ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .carrito-contenido li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em 0;
+      border-bottom: 1px solid #ccc;
+      font-size: 0.95em;
+    }
+
+    .carrito-contenido button {
+      background: none;
+      border: none;
+      color: red;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .total {
+      margin-top: 1em;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    /* Productos */
+    .producto {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1em;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .producto:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .producto img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .boton-comprar {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 0.6em 1.2em;
+      margin-top: 1em;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s, transform 0.1s;
+    }
+
+    .boton-comprar:hover {
+      background-color: #444;
+    }
+
+    .boton-comprar:active {
+      transform: scale(0.96);
+      background-color: #222;
+    }
+
+    footer {
+      background-color: #111;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+      margin-top: 2em;
+    }
+
+    /* Filtros */
+    .filtros {
+      margin: 2em;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .filtro {
+      padding: 0.5em 1em;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .filtro:hover {
+      background-color: #ddd;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Estilo Urbano</h1>
+    <p>Moda joven, urbana y con actitud</p>
+  </header>
+
+  <nav>
+    <div>
+      <a href="#">Inicio</a>
+      <a href="#">Catálogo</a>
+      <a href="#">Nosotros</a>
+      <a href="#">Contacto</a>
+    </div>
+    <div class="carrito-dropdown">
+      <span class="carrito-icono">🛒 Carrito</span>
+      <div class="carrito-contenido">
+        <ul id="lista-carrito"></ul>
+        <p class="total">Total: $<span id="total">0</span></p>
+      </div>
+    </div>
+    <div>
+      <button onclick="toggleModoOscuro()">Modo Oscuro</button>
+    </div>
+  </nav>
+
+  <!-- Slider -->
+  <div class="slider">
+    <img src="img/spike.webp" alt="Producto Destacado">
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros">
+    <div class="filtro" onclick="filtrar('remera')">Remeras</div>
+    <div class="filtro" onclick="filtrar('pantalon')">Pantalones</div>
+    <div class="filtro" onclick="filtrar('campera')">Camperas</div>
+  </div>
+
+  <section class="container">
+    <!-- Productos -->
+    <div class="producto">
+      <img src="img/remera overside.webp" alt="Remera Oversize" width="200">
+      <h2>Remera Oversize</h2>
+      <p>$5.900</p>
+      <button class="boton-comprar" onclick="agregarAlCarrito('Remera Oversize', 5900)">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/Campera Denim.webp" alt="Campera Denim" width="200" >
+      <h2>Campera Denim</h2>
+      <p>$12.500</p>
+      <button class="boton-comprar" onclick="agregarAlCarrito('Campera Denim', 12500)">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/Joggers Negros.jpg" alt="Joggers Negros" width="200">
+      <h2>Joggers Negros</h2>
+      <p>$8.700</p>
+      <button class="boton-comprar" onclick="agregarAlCarrito('Joggers Negros', 8700)">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/gorra new era.jpg" alt="Gorra New Era" width="200">
+      <h2>Gorra Snapback</h2>
+      <p>$3.200</p>
+      <button class="boton-comprar" onclick="agregarAlCarrito('Gorra Snapback', 3200)">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/short.jpg" alt="SHORT" width="200">
+      <h2>Camisa a Cuadros</h2>
+      <p>$6.400</p>
+      <button class="boton-comprar" onclick="agregarAlCarrito('Camisa a Cuadros', 6400)">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/Air jordan 4 retro.jpg" alt="Air jordan 4 retro" width="200">
+      <h2>Pantalón Cargo</h2>
+      <p>$9.800</p>
+      <button class="boton-comprar" onclick="agregarAlCarrito('Pantalón Cargo', 9800)">Comprar</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Estilo Urbano. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Carrito de compras
+    let carrito = [];
+
+    function agregarAlCarrito(nombre, precio) {
+      const productoExistente = carrito.find(item => item.nombre === nombre);
+      
+      if (productoExistente) {
+        productoExistente.cantidad += 1;
+        productoExistente.precioTotal = productoExistente.cantidad * productoExistente.precio;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1, precioTotal: precio });
+      }
+
+      mostrarCarrito();
+      mostrarNotificacion(`¡${nombre} agregado al carrito!`);
+    }
+
+    function mostrarCarrito() {
+      const listaCarrito = document.getElementById("lista-carrito");
+      listaCarrito.innerHTML = '';
+      let total = 0;
+
+      carrito.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `${item.nombre} x${item.cantidad} - $${item.precioTotal}`;
+        const botonEliminar = document.createElement("button");
+        botonEliminar.innerText = "Eliminar";
+        botonEliminar.onclick = () => eliminarDelCarrito(item.nombre);
+        li.appendChild(botonEliminar);
+        listaCarrito.appendChild(li);
+        total += item.precioTotal;
+      });
+
+      document.getElementById("total").innerText = total;
+    }
+
+    function eliminarDelCarrito(nombre) {
+      carrito = carrito.filter(item => item.nombre !== nombre);
+      mostrarCarrito();
+    }
+
+    function mostrarNotificacion(mensaje) {
+      const noti = document.createElement("div");
+      noti.innerText = mensaje;
+      noti.style.position = "fixed";
+      noti.style.bottom = "20px";
+      noti.style.right = "20px";
+      noti.style.background = "#222";
+      noti.style.color = "#fff";
+      noti.style.padding = "10px 15px";
+      noti.style.borderRadius = "6px";
+      document.body.appendChild(noti);
+      setTimeout(() => noti.remove(), 2000);
+    }
+
+    // Modo oscuro
+    function toggleModoOscuro() {
+      document.body.classList.toggle("modo-oscuro");
+    }
+
+    // Filtrar productos
+    function filtrar(categoria) {
+      alert(`Filtrar por ${categoria}`);
+      // Agregar lógica de filtrado aquí
+    }
+  </script>
+</body>
+</html>
