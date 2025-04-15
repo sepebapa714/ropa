@@ -14,7 +14,7 @@
       transition: background-color 0.3s;
       padding: 0;
     }
- 
+
     header {
       background-color: #111;
       color: #fff;
@@ -43,7 +43,6 @@
       background-color: #555;
     }
 
-    /* Modo oscuro */
     body.modo-oscuro {
       background-color: #1c1c1c;
       color: #ddd;
@@ -57,7 +56,6 @@
       background-color: #444;
     }
 
-    /* Slider */
     .slider {
       position: relative;
       width: 100%;
@@ -73,7 +71,6 @@
       transition: transform 1s ease;
     }
 
-    /* Carrito */
     .carrito-dropdown {
       position: relative;
       display: inline-block;
@@ -138,7 +135,6 @@
       text-align: right;
     }
 
-    /* Productos */
     .producto {
       background-color: #fff;
       border-radius: 8px;
@@ -146,6 +142,8 @@
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      flex: 1 1 250px;
+      max-width: 250px;
     }
 
     .producto:hover {
@@ -187,7 +185,6 @@
       margin-top: 2em;
     }
 
-    /* Filtros */
     .filtros {
       margin: 2em;
       display: flex;
@@ -207,6 +204,13 @@
       background-color: #ddd;
     }
 
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 2em;
+    }
   </style>
 </head>
 <body>
@@ -235,12 +239,10 @@
     </div>
   </nav>
 
-  <!-- Slider -->
   <div class="slider">
     <img src="img/spike.webp" alt="Producto Destacado">
   </div>
 
-  <!-- Filtros -->
   <div class="filtros">
     <div class="filtro" onclick="filtrar('remera')">Remeras</div>
     <div class="filtro" onclick="filtrar('pantalon')">Pantalones</div>
@@ -248,16 +250,15 @@
   </div>
 
   <section class="container">
-    <!-- Productos -->
     <div class="producto">
       <img src="img/remera overside.webp" alt="Remera Oversize" width="200">
       <h2>Remera Oversize</h2>
       <p>$5.900</p>
       <button class="boton-comprar" onclick="agregarAlCarrito('Remera Oversize', 5900)">Comprar</button>
     </div>
-a
+
     <div class="producto">
-      <img src="img/Campera Denim.webp" alt="Campera Denim" width="200" >
+      <img src="img/Campera Denim.webp" alt="Campera Denim" width="200">
       <h2>Campera Denim</h2>
       <p>$12.500</p>
       <button class="boton-comprar" onclick="agregarAlCarrito('Campera Denim', 12500)">Comprar</button>
@@ -271,21 +272,21 @@ a
     </div>
 
     <div class="producto">
-      <img src="img/gorra new era.jpg" alt="Gorra New Era" width="200">
+      <img src="img/gorra new era.jpg" alt="Gorra Snapback" width="200">
       <h2>Gorra Snapback</h2>
       <p>$3.200</p>
       <button class="boton-comprar" onclick="agregarAlCarrito('Gorra Snapback', 3200)">Comprar</button>
     </div>
 
     <div class="producto">
-      <img src="img/short.jpg" alt="SHORT" width="200">
+      <img src="img/short.jpg" alt="Camisa a Cuadros" width="200">
       <h2>Camisa a Cuadros</h2>
       <p>$6.400</p>
       <button class="boton-comprar" onclick="agregarAlCarrito('Camisa a Cuadros', 6400)">Comprar</button>
     </div>
 
     <div class="producto">
-      <img src="img/Air jordan 4 retro.jpg" alt="Air jordan 4 retro" width="200">
+      <img src="img/Air jordan 4 retro.jpg" alt="Pantalón Cargo" width="200">
       <h2>Pantalón Cargo</h2>
       <p>$9.800</p>
       <button class="boton-comprar" onclick="agregarAlCarrito('Pantalón Cargo', 9800)">Comprar</button>
@@ -297,19 +298,16 @@ a
   </footer>
 
   <script>
-    // Carrito de compras
     let carrito = [];
 
     function agregarAlCarrito(nombre, precio) {
       const productoExistente = carrito.find(item => item.nombre === nombre);
-      
       if (productoExistente) {
         productoExistente.cantidad += 1;
         productoExistente.precioTotal = productoExistente.cantidad * productoExistente.precio;
       } else {
         carrito.push({ nombre, precio, cantidad: 1, precioTotal: precio });
       }
-
       mostrarCarrito();
       mostrarNotificacion(`¡${nombre} agregado al carrito!`);
     }
@@ -318,7 +316,6 @@ a
       const listaCarrito = document.getElementById("lista-carrito");
       listaCarrito.innerHTML = '';
       let total = 0;
-
       carrito.forEach(item => {
         const li = document.createElement("li");
         li.innerHTML = `${item.nombre} x${item.cantidad} - $${item.precioTotal}`;
@@ -329,7 +326,6 @@ a
         listaCarrito.appendChild(li);
         total += item.precioTotal;
       });
-
       document.getElementById("total").innerText = total;
     }
 
@@ -352,15 +348,12 @@ a
       setTimeout(() => noti.remove(), 2000);
     }
 
-    // Modo oscuro
     function toggleModoOscuro() {
       document.body.classList.toggle("modo-oscuro");
     }
 
-    // Filtrar productos
     function filtrar(categoria) {
       alert(`Filtrar por ${categoria}`);
-      // Agregar lógica de filtrado aquí
     }
   </script>
 </body>
